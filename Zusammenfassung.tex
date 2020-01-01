@@ -1,0 +1,7 @@
+Du hast mit der Breitensuche deinen ersten Algorithmus für Graphen kennengelernt. Der Algorithmus nimmt als Eingabe einen Graphen und einen Startknoten in diesem Graphen und durchläuft dann alle Knoten in der gleichen Zusammenhangskompnente wie der Startknoten geordnet nach aufsteigendem Abstand vom Startknoten. Man kann den Algorithmus auch so abändern, dass man als Eingabe zusätzlich einen gesuchten Zielknoten gibt und die Suche abbricht sobald dieser gefunden wurde.
+
+Du hast gelernt, dass du den Algorithmus leicht abändern kannst, um den Abstand zwischen zwei Knoten zu ermitteln. Dafür musst du für jeden besuchten Knoten merken, wir weit er vom Startknoten entfernt war.
+
+Wenn du dir für jeden merkst, warum er besucht wurde (als Nachbar von welchem Knoten), kannst du mithilfe von Backtracking den kürzesten Pfad zwischen dem Startknoten und einen beliebigen Knoten herausfinden. Wenn der Startknoten gleich bleibt, musst du nur das Backtracking neu machen.
+
+Ausserdem hast du gesehen, wie sich viele unteschiedliche Probleme als Graphprobleme modellieren und lösen lassen. Zum Beispiel, hast du gesehen, dass Menschen, Haltestellen, Wikipediaartikel, Fliesen, Wörter und Spielkästchen als Knoten dienen können, und dass ein Staubsauger-Roboter, der zu seiner Aufladestation muss, sich im Grunde genommen nicht von einem Mädchen unterscheidet, welches unter ihren Bekannten eine von einem Panda gebissene Person sucht, oder von einem Jungen, der mit zwei gezinkten Münzen ein Schlangenspiel gewinnen will.
