@@ -15,8 +15,8 @@ Wir betrachten wieder das Tramliniennetz von Zürich und zeichnen den Ausschnitt
 
 \end{itemize}
 \end{multicols}
-\noindent vereinfacht als Graphen auf. Wir haben die Knoten bewusst alphabetisch aufgelistet, denn immer wenn wir alle Nachbarn einer Haltestelle betrachten müssen, werden wir dies in alphabetischer Reihenfolge tun. 
-Damit wir mit der Breitenusuche beginnen können, müssen wir einen Startknoten auswählen. Wir wählen hier wie im Beispiel in der Einführung die Kantonsschule, also den Knoten {\bf{KS}} als Startknoten und schreiben ihn gleich auf eine Warteliste. Wir arbeiten also wiedereinmal mit dem ''First In, First Out''-Prinzip, denn wir gehen in jedem Schritt so vor, dass wir den ersten Knoten Von der Warteliste entfernen und dafür seine noch unbesuchten Nachbarn der Warteliste anhängen. Im folgenden verwenden wir 3 Farben für die Knoten um die Breitensuche zu veranschaulichen. Blaue Knoten sind jene die die Breitensuche noch nicht erreicht hat. Orange Knoten sind die besuchten Knoten, welche noch auf der Warteliste stehen. Graue Knoten sind jene die wir bereits wieder von der Warteliste entfernt haben. Überlege anhand des Einführunsbeispiels, warum es so wichtig ist die besuchten Knoten zu markieren!
+\noindent vereinfacht als Graph auf. Wir haben die Knoten bewusst alphabetisch aufgelistet, denn immer wenn wir alle Nachbarn einer Haltestelle betrachten müssen, werden wir dies in alphabetischer Reihenfolge tun. 
+Damit wir mit der Breitensuche beginnen können, müssen wir einen Startknoten auswählen. Wir wählen hier wie im Beispiel in der Einführung die Kantonsschule, also den Knoten {\bf{KS}} als Startknoten und schreiben ihn gleich auf eine Warteliste. Wir arbeiten also wiedereinmal mit dem ''First In, First Out''-Prinzip, denn wir gehen in jedem Schritt so vor, dass wir den ersten Knoten von der Warteliste entfernen und dafür seine noch unbesuchten Nachbarn der Warteliste anhängen. Im folgenden verwenden wir 3 Farben für die Knoten um die Breitensuche zu veranschaulichen. Blaue Knoten sind jene, die die Breitensuche noch nicht erreicht hat. Orange Knoten sind die besuchten Knoten, welche noch auf der Warteliste stehen. Graue Knoten sind jene, die wir bereits wieder von der Warteliste entfernt haben. Überlege anhand des Einführungsbeispiels, warum es so wichtig ist die besuchten Knoten zu markieren!
 
 \begin{figure}[H]
     \centering
@@ -37,14 +37,14 @@ Damit wir mit der Breitenusuche beginnen können, müssen wir einen Startknoten 
     \begin{subfigure}[h]{0.45\textwidth}
     \raggedright
     \includegraphics[width=\textwidth]{Pictures/BS/BFSB2.PNG}
-    \caption{ Der erste Knoten auf der Warteliste war {\bf{E/U}} wir entfernen ihn und hängen seine zwei unbesuchten Nachbarn der Warteliste an.}
+    \caption{ Der erste Knoten auf der Warteliste war {\bf{E/U}}, wir entfernen ihn und hängen seine zwei unbesuchten Nachbarn {\bf{HB}} und {\bf{HE}} der Warteliste an.}
     \end{subfigure}
     \vspace{5mm}
     \qquad
     \begin{subfigure}[h]{0.45\textwidth}
     \raggedleft
     \includegraphics[width=\textwidth]{Pictures/BS/BFSB3.PNG}
-    \caption{Der erste Knoten auf der Warteliste war {\bf{KH}}, wir entfernen ihn und hängen seine drei unbesuchten Nachbarn der Warteliste an.} 
+    \caption{Der erste Knoten auf der Warteliste war {\bf{KH}}, wir entfernen ihn und hängen seine drei unbesuchten Nachbarn {\bf{B}}, {\bf{HP}} und {\bf{N}} der Warteliste an.} 
     \end{subfigure}
     \end{figure}
 \begin{figure}[H]\ContinuedFloat

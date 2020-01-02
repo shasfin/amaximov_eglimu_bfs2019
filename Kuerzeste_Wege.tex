@@ -1,35 +1,52 @@
 \subsection{Länge des kürzesten Pfades}
 
-Die Breitensuche ist nicht nur ein Verfahren, um Knoten in einem Graphen systematisch aufzulisten. Dank der speziellen Reihernfolge, in der die Knoten besucht werden (zuerst die direkten Nachbarn, dann dessen Nachbarn und so weiter), sind wir sicher, dass wir jeden erreichbaren Knoten über einen kürzesten Pfad erreichen. In diesem Abschnitt werden wir den Algorithmus, den wir im vorherigen Abschnitt kennengelernt haben, so erweitern, dass wir auch den Abstand zwischen zwei Knoten in einem Graphen berechnen können.
+Die Breitensuche ist nicht nur ein Verfahren, um Knoten in einem Graphen systematisch aufzulisten. Dank der speziellen Reihenfolge, in der die Knoten besucht werden (zuerst die direkten Nachbarn, dann dessen Nachbarn und so weiter), sind wir sicher, dass wir jeden erreichbaren Knoten über einen kürzesten Pfad erreichen. In diesem Abschnitt werden wir den Algorithmus, den wir im vorherigen Abschnitt kennengelernt haben, so erweitern, dass wir auch den Abstand zwischen zwei Knoten in einem Graphen berechnen können.
 
-Wie wir schon wissen, der Abstand zwischen zwei Knoten ist definiert als die Länge des kürzesten Pfades zwischen diesen zwei Knoten. Ein Pfad ist eine Folge von Knoten, die, wie eine Kette, eine Kante zum vorherigen und zum nächsten Knoten haben. Formal hatten wir den Pfad wie folgt definiert.
+Wie wir schon wissen, ist der \textbf{Abstand} zwischen zwei Knoten definiert als die Länge des kürzesten Pfades zwischen diesen zwei Knoten. Ein \textbf{Pfad} ist eine Folge von Knoten, die, wie eine Kette, eine Kante zum vorherigen und zum nächsten Knoten haben. Die \textbf{Länge} eines Pfades ist die Anzahl Kanten auf dem Pfad.
 
-\begin{definition}
-Sei \(G = (V,E)\) ein ungerichteter Graph. Ein \textbf{Pfad} \(P = {v_0, v_1, \dots, v_n}\) der Länge \(n\) ist eine Folge von paarweise verschiedenen Knoten \(v_i \in V\) so dass zwischen zwei darauffolgenden Knoten eine Kante verläuft, d.h. \({v_i, v_{i+1}} \in E\) für alle i \(\in {0, n-1}\).
-\end{definition}
+\begin{beispiel}
+Betrachte folgenden Graphen.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{Pictures/SP/abstand_def.png} 
+\end{figure}
+Der Abstand zwischen \textbf{A} und \textbf{C} ist \(2\). Zwischen \textbf{A} und \textbf{C} gibt es zwei Pfade: \textbf{ABC} und \textbf{ADEC}. Der Pfad \textbf{ABC} ist der kürzeste und hat zwei Kanten, somit ist der Abstand zwischen \textbf{A} und \textbf{C} \(2\).
 
-Der kürzeste Pfad zwichen zwei Knoten \(u\) und \(v\) ist der Pfad mit der kleinsten Länge dessen Endknoten \(u\) und \(v\) sind.
+Bevor du weiterliest, überlege kurz, was der Abstand zwischen \textbf{A} und \textbf{F} sein könnte.
 
-\begin{aufgabe}
-Zeichne einen vollständigen Graphen mit 5 Knoten. Was ist die Länge des kürzesten Pfades zwischen zwei beliebigen Knoten?
+Beobachte, dass es zwischen \textbf{A} und \textbf{F} gar keinen Pfad gibt. Sie sind nicht verbunden. In einem solchen Fall sagen wir, dass der Abstand \(\infty\) ist.
+\end{beispiel}
+
+\begin{aufgabe}\label{aufgabe_abstand_ex}
+Betrachte folgenden Graphen.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Pictures/SP/abstand_ex.png} 
+    \label{fig:abstand_ex}
+\end{figure}
+Was ist der Abstand zwischen \textbf{A} und \textbf{F}?
+Was ist der Abstand zwischen \textbf{C} und \textbf{E}?
 \end{aufgabe}
-\begin{aufgabe}
-Zeichne einen Gittergraphen mit 2 mal 3 Knoten. Welche zwei Knoten sind am weitesten auseinander? Bestimme den Abstand (die Länge des kürzesten Pfades) zwischen diesen zwei Knoten.
-\end{aufgabe}
-\begin{aufgabe}
-Zeichne einen Kreis mit 6 Knoten. Welche zwei Knoten sind am weitesten auseinander? Wie weit sind sie voneinander entfernt?
+\begin{aufgabe}\label{aufgabe_abstand}
+\begin{enumerate}[(a)]
+\item \label{aufgabe_abstand_k5} Zeichne einen vollständigen Graphen mit 5 Knoten. Was ist die Länge des kürzesten Pfades zwischen zwei beliebigen Knoten?
+\item \label{aufgabe_abstand_gitter23} Zeichne einen Gittergraphen mit 2 mal 3 Knoten. Welche zwei Knoten sind am weitesten auseinander? Bestimme den Abstand (die Länge des kürzesten Pfades) zwischen diesen zwei Knoten.
+\item \label{aufgabe_abstand_kreis6} Zeichne einen Kreis mit 6 Knoten. Welche zwei Knoten sind am weitesten auseinander? Wie weit sind sie voneinander entfernt?
+\end{enumerate}
 \end{aufgabe}
 
 \paragraph{Das Wikipedia-Spiel}
+Als wir den Breitensuchealgorithmus in Worten definiert hatten, haben wir das Wikipedia-Spiel kennengelernt. Alice gibt Bob zwei Wikipedia-artikel vor und er muss vom Startartikel aus auf Links klicken, bis er auf den Zielartikel stosst. Das Ziel ist mit möglichst wenigen Klicks auszukommen. 
+
 Der Wikipedia-Graph ist nicht so übersichtlich und regelmässig, wie die Graphen, die wir gerade gesehen haben. Um den kürzesten Pfad zwischen zwei Artikel zu finden, muss Bob systematisch vorgehen. 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Pictures/Wikipedia.PNG} 
+    \includegraphics[width=0.7\textwidth]{Pictures/Wikipedia.PNG} 
     \caption{Die Verlinkung von Wikipedia-Artikeln als Graphen.}
     \label{fig:wikipedia_graph}
 \end{figure}
 
-Wenn er anch dem Breitensuchealgorithmus vorgeht, wird er den Startartikel im Browser aufmachen (\textit{Breitensuche}, in unserem Beispiel von vorher) und dann jeden Link (\textit{Deutschland}, \textit{Graph}, \textit{Laufzeit}, \textit{Knoten}) in einem neuen Tab öffnen und anschliessend den Tab mit der Breitensuche schliessen. All die Artikel, die er jetzt im Browser offen hat, sind ein Klick vom Breitensucheartikel entfernt. Jetzt kann er dasselbe für den zuerst geöffneten noch offenen Tab (\textit{Deutschland}) tun. Er muss sich einfach merken, dass die neugeöffneten Tabs (\textit{Eisenbahn}, \textit{Schweiz}) sind jetzt 2 Klicks entfernt: Ein Klick mehr als die Seite, woher er kommt (\textit{Deutschland}). Er kann einfach für jedes Artikel aufschreiben, wie viele Klicks er vom Breitensucheartikel entfernt ist. Jeder nicht besuchter benachbarter Artikel wird ein Klick weiter sein.
+Wenn er nach dem Breitensuchealgorithmus vorgeht, wird er den Startartikel im Browser aufmachen (\textit{Breitensuche}, in unserem Beispiel von vorher) und dann jeden Link (\textit{Deutschland}, \textit{Graph}, \textit{Laufzeit}, \textit{Knoten}) in einem neuen Tab öffnen und anschliessend den Tab mit der Breitensuche schliessen. All die Artikel, die er jetzt im Browser offen hat, sind ein Klick vom Breitensucheartikel entfernt. Jetzt kann er dasselbe für den zuerst geöffneten noch offenen Tab (\textit{Deutschland}) tun. Er muss sich einfach merken, dass die neugeöffneten Tabs (\textit{Eisenbahn}, \textit{Schweiz}) sind jetzt 2 Klicks entfernt: Ein Klick mehr als die Seite, woher er kommt (\textit{Deutschland}). Er kann einfach für jeden Artikel aufschreiben, wie viele Klicks er vom Breitensucheartikel entfernt ist. Jeder nicht besuchte benachbarte Artikel wird ein Klick weiter sein.
 
 \begin{aufgabe}\label{aufgabe_wikipedia_spiel}
 Alice und Bob spielen das Wikipedia-Spiel auf den Graphen in Abbildung \ref{fig:wikipedia_graph}. Bob startet bei \textbf{BS} und muss in möglichst wenig Klicks \textbf{SBZ} erreichen. Helfe Bob herauszufinden, wie viele Klicks er braucht. Wie musst du den Breitensuchealgorithmus modifizieren, um die minimale Anzahl Klicks zu ermitteln? Führe deinen modifizierten Breitensuchealgorithmus auf diesen Graphen aus. Wie sehen in jedem Schritt \texttt{queue} und \texttt{visited} aus? Wo schreibst du die Abstände zwischen dem Startknoten und jedem besuchten Knoten auf?
@@ -70,7 +87,7 @@ def length_shortest_path(graph, initial, goal):
 \end{lstlisting}
 
 \paragraph{Über wie vielen Ecken kennt jeder jeden?}
-Alice hat gehört, dass jeder jeden über 6,6 Ecken kennt. Sie ist von dieser Theorie sehr begeistert und möchte herausfinden über wie vielen Ecken sie eine Person kennt, die schon Mal von einem Panda gebissen worden ist.
+Alice hat gehört, dass jeder jeden im Schnitt über 6,6 Ecken kennt. Das heisst, jede zwei Menschen auf der Welt sind über höchstens 7 Kontaktpersonen bekannt. Alice ist von dieser Theorie sehr begeistert und möchte herausfinden, über wie vielen Ecken sie eine Person kennt, die schon Mal von einem Panda gebissen worden ist.
 
 \begin{aufgabe}\label{aufgabe_panda_gebissen}
 Hier ist eine Beschreibung von den Freundschaften von Alice und ihren Freunden.
@@ -86,6 +103,8 @@ Bob ist der beste Freund von Alice. Bob kennt ausserdem Charlie und David. Charl
 \end{enumerate}
 
 \end{aufgabe}
+
+
 
 \paragraph{Norbert, der Staubsauger-Roboter}
 Norbert ist ein alter Staubsauger-Roboter. Er putzt das Zimmer den ganzen Tag und nun hat er fast kein Akku mehr.
@@ -105,7 +124,7 @@ Norbert hat eine ziemlich gute mentale Karte vom Zimmer. Er weiss, dass das Zimm
 \end{figure}
 Wir werden jetzt das Zimmer als Graphen modellieren, so dass die Anzahl Schritte, die Norbert bis zur Aufladestation fahren muss, dem Abstand zwischen den Knoten \texttt{N} und \texttt{A} entspricht.
 
-Die Knoten vom Zimmergraphen sind die Fliesen und es gibt genau dann eine Kante zwischen zwei Knoten, wenn Norbert von der einen Fliese bis zur anderen in einem seiner Schritten fahren kann. Die Möbel sind als Knoten ohne Kanten modelliert.
+Die Knoten vom Zimmergraphen sind die Fliesen und es gibt genau dann eine Kante zwischen zwei Knoten, wenn Norbert von der einen Fliese bis zur anderen in einem seiner Schritten fahren kann. Die Möbel sind als isolierte Knoten (das heisst, Knoten ohne Kanten) modelliert.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Pictures/SP/norbert_graph.png}
@@ -117,12 +136,12 @@ Die Knoten werden in Folgender Reihenfolge besucht und der gesuchte Abstand ist 
 \begin{lstlisting}
 visited = ["N", "01", "02", "12", "22", "21", "32", "31", "42", "41", "43", "52", "51","44", "53", "50", "45", "54", "46", "55", "36", "47", "56", "26", "25", "24", "14", "15", "05", "06", "07"]
 \end{lstlisting}
-Beobachte, dass die Möbelknoten gar nicht besucht worden sind, weil sie von \texttt{N} aus nicht erreichber sind.
+Beobachte, dass die Möbelknoten gar nicht besucht worden sind, weil sie von \texttt{N} aus nicht erreichbar sind.
 
 \subsection{Der kürzeste Pfad}
-Es ist sicher nützlich zu wissen, dass Bob in nur drei Klicks den Wikipedia-Artikel über den Zürcher Strassenbahnnetz erreichen kann, wenn der beim Breitensucheartikel startet; oder dass Alice über 3 Ecken jemanden kennt, der von einem Panda gebissen wurde; oder dass Norbert der Staubsauger-Rotober in 17 Schritten die Aufladestation erreichen kann. Aber wäre es nicht noch nützlicher zu wissen, welche Links muss Bob anklicken, oder welche Freunde und Freundesfreunde muss Alice kontaktieren, oder wo lang muss Norbert fahren?
+Es ist sicher nützlich zu wissen, dass Bob in nur drei Klicks den Wikipedia-Artikel über den Zürcher Strassenbahnnetz erreichen kann, wenn der beim Breitensucheartikel startet; oder dass Alice über 3 Ecken jemanden kennt, der von einem Panda gebissen wurde; oder dass Norbert der Staubsauger-Rotober in 17 Schritten die Aufladestation erreichen kann. Aber wäre es nicht noch nützlicher zu wissen, welche Links Bob anklicken, oder welche Freunde und Freundesfreunde Alice kontaktieren, oder wo lang Norbert fahren müssen?
 
-Wir werden jetzt Norbert den Staubsauger-Roboter helfen, so schnell wie möglich seine Aufladestation zu erreichen. Wie auch für die Länge des kürzesten Pfades, gibt uns der Breitensuchealgorithmus alle benötigten Informationen, wir müssen sie nur speichern und richtig verwenden. Damit die Beschreibung ein Bisschen schneller geht, werden wir Norbert in ein kleineres Zimmer platzieren.
+Wir werden jetzt Norbert den Staubsauger-Roboter helfen, so schnell wie möglich seine Aufladestation zu erreichen. Wie auch für die Länge des kürzesten Pfades, gibt uns der Breitensuchealgorithmus alle benötigten Informationen, wir müssen sie nur speichern und richtig verwenden. Damit die Beschreibung ein bisschen schneller geht, werden wir Norbert in ein kleineres Zimmer platzieren.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{Pictures/SP/norbert_klein_graph.png}
@@ -134,16 +153,18 @@ Nehmen wir an, wir führen jetzt die Breitensuche aus. Wir fangen bei \texttt{N}
 visited = ["N", "01", "10", "02", "11", "03", "21", "13", "31", "A"]
 \end{lstlisting}
 Aber wie können wir jetzt den Pfad ausrechnen?
-Die wichtige Beobachtung ist, dass wir \texttt{A} als Nachbar von \texttt{13} gefunden haben. Das bedeutet, dass der kürzeste Pfad von \texttt{N} nach \texttt{A} über \texttt{13} verläuft. Wenn es einen kürzeren Pfad über einen anderen Knoten gegeben hätte, hätten wir \texttt{A} früher gefunden als Nachbar von einem anderen Knoten. Den Knoten \texttt{13} haben wir als Nachbar von \texttt{03} gefunden. Dann muss \texttt{03} auch auf dem kürzesten Pfad liegen. Den Knoten \texttt{03} haben wir von \texttt{02} gefunden, und \texttt{02} von \texttt{01}, und \texttt{01} von \texttt{N}.
-
-Um den kürzesten Pfad aufzulisten haben wir die Nachbarn zurückverfolgt, von \textbf{A} zurück nach \texttt{N}, in der umgekehrten Reihenfolge, in der die Breitensuche sie gefunden hatte.
+Die wichtige Beobachtung ist, dass wir \textbf{A} als Nachbar von \textbf{13} gefunden haben. Das bedeutet, dass der kürzeste Pfad von \textbf{N} nach \textbf{A} über \textbf{13} verläuft.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{Pictures/SP/norbert_klein_graph_arrows.png}
-    \caption{Wir haben mit roten Pfeilen die Kanten markiert, die wir bei der Breitensuche verwendet hatten. Um den kürzesten Pfad von \texttt{N} nach \texttt{A} zu finden, müssen wir nur die Pfeile von \texttt{A} nach \texttt{N} zurückverfolgen.}
+    \caption{Wir haben mit roten Pfeilen die Kanten markiert, die wir bei der Breitensuche verwendet hatten. Um den kürzesten Pfad von \textbf{N} nach \textbf{A} zu finden, müssen wir nur die Pfeile von \textbf{A} nach \textbf{N} zurückverfolgen.}
     \label{fig:norbert_klein_graph_arrows}
 \end{figure}
-Aus einem Knoten können mehrere rote Pfeile ausgehen (weil ein Knoten mehrere Nachbarn haben kann, die in die Warteschlange eingefügt werden), aber maximal ein Pfeil kann darauf zeigen (weil wir Knoten, die wir schon gesehen haben, kein zweites Mal in die Warteschlange einfügen). Alle rote Pfeile, wenn wir sie in die andere Richtung verfolgen, führen nach \texttt{N}, und zwar über den kürzesten Pfad.
+Wenn es einen kürzeren Pfad über einen anderen Knoten gegeben hätte, hätten wir \textbf{A} früher gefunden als Nachbar von einem anderen Knoten. Den Knoten \textbf{13} haben wir als Nachbar von \textbf{03} gefunden. Dann muss \textbf{03} auch auf dem kürzesten Pfad liegen. Den Knoten \textbf{03} haben wir von \textbf{02} gefunden, und \textbf{02} von \textbf{01}, und \textbf{01} von \textbf{N}.
+
+Um den kürzesten Pfad aufzulisten haben wir die Nachbarn zurückverfolgt, von \textbf{A} zurück nach \textbf{N}, in der umgekehrten Reihenfolge, in der die Breitensuche sie gefunden hatte.
+
+Aus einem Knoten können mehrere rote Pfeile ausgehen (weil ein Knoten mehrere Nachbarn haben kann, die in die Warteschlange eingefügt werden), aber maximal ein Pfeil kann darauf zeigen (weil wir Knoten, die wir schon gesehen haben, kein zweites Mal in die Warteschlange einfügen). Alle rote Pfeile, wenn wir sie in die andere Richtung verfolgen, führen nach \textbf{N}, und zwar über den kürzesten Pfad.
 
 \begin{aufgabe}\label{aufgabe_find_shortest_path}
 Betrachte folgenden Graphen. 
@@ -152,18 +173,18 @@ Betrachte folgenden Graphen.
     \includegraphics[width=0.6\textwidth]{Pictures/SP/shortest_path_graph.png}
 \end{figure}
 \begin{enumerate}[(a)]
-    \item Finde den küzesten Pfad zwischen \texttt{0} und \texttt{9}. Benutze einen Breitensuche-ähnlichen Verfahren.
-    \item Was würdest du machen, wenn du jetzt den kürzesten Pfad zwischen \texttt{0} und \texttt{10} finden müsstest? Kannst du etwas aus der vorherigen Teilaufgabe wiederverwenden?
-    \item Wie würdest du den kürzesten Pfad zwischen \texttt{6} und \texttt{0} finden? Kannst du etwas aus den vorherigen Teilaufgaben wiederverwenden?
-    \item Und wenn du den kürzesten Pfad zwischen \texttt{9} und \texttt{1} finden musst?
+    \item Finde den küzesten Pfad zwischen \textbf{0} und \textbf{9}. Benutze einen Breitensuche-ähnlichen Verfahren.
+    \item Was würdest du machen, wenn du jetzt den kürzesten Pfad zwischen \textbf{0} und \textbf{10} finden müsstest? Kannst du etwas aus der vorherigen Teilaufgabe wiederverwenden?
+    \item Wie würdest du den kürzesten Pfad zwischen \textbf{6} und \textbf{0} finden? Kannst du etwas aus den vorherigen Teilaufgaben wiederverwenden?
+    \item Und wenn du den kürzesten Pfad zwischen \textbf{9} und \textbf{1} finden musst?
 \end{enumerate}{}
 \end{aufgabe}
 
 \begin{aufgabe}\label{aufgabe_shortest_path_alg}
 Überlege, wie du den Breitensuchealgorithmus verändern musst, um den kürzesten Pfad zwischen zwei Knoten zu finden. Du kannst deine Erkenntnisse aus Aufgabe \ref{aufgabe_find_shortest_path} benutzen.
 
-Welche zusätzliche Informationen musst du speichen? Wo würdest du es machen?
-Wie verwendest du diese zusätzliche Informatinen, um den Pfad zu finden?
+Welche zusätzliche Informationen musst du speichern? Wo würdest du es machen?
+Wie verwendest du diese zusätzliche Informationen, um den Pfad zu finden?
 
 Schreibe deinen Algorithmus möglichst genau auf.
 \end{aufgabe}
@@ -179,7 +200,7 @@ Wir werden jetzt zusammen eine mögliche Lösung zur Aufgabe \ref{aufgabe_shorte
 
 Zuerst werden wir das erste Breitensucheprogramm so verändern, dass wir uns für jeden besuchten Knoten merken, woher wir diesen Knoten gefunden haben. Das Programm erwartet einen Graphen und einen Startknoten und gibt für jeden erreichbaren Knoten aus, woher wir diesen Knoten gefunden haben.
 
-\begin{lstlisting}[language=Python, caption={Programm, welches die rote Pfeile ausgehend von einem Startknoten berechnet und ausgibt. Die einzigen zwei Zeilen, die sich verändert haben, sind 3 und 10.}, label={bfs_with_parent}]
+\begin{lstlisting}[language=Python, caption={Programm, welches die ''rote Pfeile'' ausgehend von einem Startknoten berechnet und ausgibt. Die einzigen zwei Zeilen, die sich verändert haben, sind 3 und 10.}, label={bfs_with_parent}]
 def bfs_with_parent(graph, initial):
     queue = [initial]
     visited = {initial:None}
@@ -193,7 +214,7 @@ def bfs_with_parent(graph, initial):
     return visited
 \end{lstlisting}
 
-Führe das Programm auf den Graphen aus der Aufgabe \ref{aufgabe_find_shortest_path} aus. Kannst du alle rote Pfeile in der Ausgabe wieder finden?
+Führe das Programm auf den Graphen aus der Aufgabe \ref{aufgabe_find_shortest_path} aus. Kannst du alle ''rote Pfeile'' in der Ausgabe wieder finden?
 \begin{lstlisting}[language=Python]
 numbers = {0: [1, 2],
         1: [0, 3, 4],
@@ -211,7 +232,7 @@ print(bfs_with_parent(numbers, 0))
 {0: None, 1: 0, 2: 0, 3: 1, 4: 1, 5: 4, 6: 4, 7: 4, 8: 6, 9: 5, 10: 6}
 \end{lstlisting}
 
-Jetzt schreiben wir ein Programm, das die roten Pfeile zurückverfolgt. Das Programm erwartet einen Startknoten, einen Endknoten und etwas in der gleichen Form, wie die Ausgabe von \texttt{bfs\_with\_parent}, und gibt den kürzesten Pfad zurück.
+Jetzt schreiben wir ein Programm, das die ''roten Pfeile'' zurückverfolgt. Das Programm erwartet einen Startknoten, einen Endknoten und etwas in der gleichen Form, wie die Ausgabe von \texttt{bfs\_with\_parent}, und gibt den kürzesten Pfad zurück.
  
 Stell dir vor, du hättest ein Buch von einer Person ausgeliehen, die du über 6 Ecken kennst. Du weisst nicht, wer diese Person ist und wo sie wohnt. Du weisst nur, wer dir dieses Buch gegeben hat. Und die Person, die es dir gegeben hat, weiss auch nur von wem sie es bekommen hat. Und so könnt du und deine Freunde die Kette bis zum Besitzer des Buches zurückverfolgen, der das Buch von niemanden bekommen hat und deswegen das Buch behält. Die Datenstruktur, die das Backtracking-Programm erwartet, speichert genau diese Relation: wer von wem das Buch bekommen hat.
 
@@ -238,19 +259,18 @@ Wie weit ist es von der Erde bis zum Mars? Es kommt darauf an, wie man es misst!
 \begin{lstlisting}
 HAND - FAND - FANS - FASS - FUSS
 \end{lstlisting}
-Der Sinn vom Spiel ist eine möglichst kurze Folge von Wörter zu finden, die das Start- mit dem Zielwort verbindet, wobei alle Wörter genau 4 Buchstaben haben und zwei Wörter dürfen genau dann daneben stehen, wenn sie sich genau um einen Buchstaben unterscheiden.
+Der Sinn vom Spiel ist es eine möglichst kurze Folge von Wörter zu finden, die das Start- mit dem Zielwort verbindet, wobei alle Wörter genau 4 Buchstaben haben und zwei Wörter dürfen genau dann daneben stehen, wenn sie sich genau um einen Buchstaben unterscheiden.
 
 
 \begin{aufgabe}
 \begin{enumerate}[(a)]\label{aufgabe_erde_mars_graph}
-    \item Formuliere das Spiel als Graphen. Was sind die Knoten? Wann gibt es eine Kante zwischen zwei Knoten? Ist der Graph gerichtet oder ungerichtet?
+    \item Formuliere das Spiel als Graph. Was sind die Knoten? Wann gibt es eine Kante zwischen zwei Knoten? Ist der Graph gerichtet oder ungerichtet?
     \item Zeichne den Graphen, der folgende Wörter modelliert:
-    \begin{lstlisting}
-    BANK, ZINS, ZANK, SINN, SAND, ZINK, SANK, ZINN
-    \end{lstlisting}
-    \item Füge zwei Wörter hinzu.
-    \item Gibt es einen Pfad zwischen \texttt{BANK} und \texttt{ZINS}, welcher nur aus den aufgelisteten Wörter besteht?
-    \item Wenn du das Wort \texttt{ZINK} entfenst, kannst du zwei Wörter hinzufügen, so dass \texttt{BANK} und \texttt{ZINS} immer noch verbunden sind?
+\begin{lstlisting}
+BANK, ZINS, ZANK, SINN, SAND, ZINK, SANK, ZINN
+\end{lstlisting}
+    \item Gibt es einen Pfad zwischen \textbf{\texttt{BANK}} und \textbf{\texttt{ZINS}}, welcher nur aus den aufgelisteten Wörter besteht?
+    \item Wenn du das Wort \textbf{\texttt{ZINK}} entfenst, kannst du zwei Wörter hinzufügen, so dass \textbf{\texttt{BANK}} und \textbf{\texttt{ZINS}} immer noch verbunden sind?
 \end{enumerate}
 
 \end{aufgabe}
@@ -271,7 +291,6 @@ Der Sinn vom Spiel ist eine möglichst kurze Folge von Wörter zu finden, die da
     \item Rufe das Programm aus der Aufgabe \ref{aufgabe_shortest_path} auf und finde den kürzesten Pfad zwischen Erde und Mars heraus.
     \item * Du hast bestimmt bemerkt, wie mühsam und fehleranfällig es ist, solche Graphen selber zu konstruieren und zu erweitern. Dabei ist die Idee dahinter ziemlich einfach: Nachbarwörter unterscheiden sich um einen Buchstaben. Verwende deine Kenntnisse in der Stringmanipulation und Stringkomposition, um ein Programm zu schreiben, das eine Menge von Wörter und ein Wort erwartet und alle Nachbarwörter des Wortes ausgibt, die in der Menge der Referenzwörter enthalten sind.
     \item * Schreibe das Programm aus der Aufgabe \ref{aufgabe_shortest_path} so um, dass es den Graphen nicht als Liste der Nachbarn erwartet, sondern als Liste aller Knoten, und verwende dein Programm aus der vorherigen Teilaufgabe, um die Nachbarn zu berechnen.
-    \item * Wäre es möglich auch für die Zimmer von Norbert dem Staubsauger-Roboter eine solche Darstellung zu verwenden? Schreibe das Programm, welches aus der Zimmergrösse und Möbelkoordinaten die Nachbarn von einem Knoten berechnet.
 \end{enumerate}
 \end{aufgabe}
 Jetzt können wir noch mehr Wörter hinzufügen und herausfinden, was weiter von der Erde ist: der Mond oder der Mars.

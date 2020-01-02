@@ -61,6 +61,39 @@ Bob kann den gewünschten Artikel also finden und wir könen die Breitensuche ab
     \end{figure}
 \end{enumerate}
 
+\paragraph{Aufgabe \ref{aufgabe_abstand_ex}}
+Der Abstand zwischen \textbf{A} und \textbf{F} ist \(3\). Zwischen diesen Knoten gibt es die Pfade \textbf{ABEF}, \textbf{ACBEF} und \textbf{ACDEF}; der kürzeste Pfad hat Länge \(3\).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Pictures/SP/abstand_ex-l1.png}
+\end{figure}
+Der Abstand zwischen \textbf{C} und \textbf{E} ist \(2\). Zwischen diesen Knoten gibt es die Pfade \textbf{CBE} und \textbf{CDE}. Beide haben Länge \(2\).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Pictures/SP/abstand_ex-l2.png}
+\end{figure}
+
+\paragraph{Aufgabe \ref{aufgabe_abstand}}
+\begin{enumerate}[(a)]
+\item Der vollständige Graph mit 5 Knoten hat eine Kante zwischen jedem Paar von Knoten. Da jeder Knoten mit jedem anderen direkt verbunden ist, ist der Abstand zwischen zwei beliebigen Knoten \(1\).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Pictures/SP/abstand_k5.png}
+\end{figure}
+
+\item In einem 2 mal 3 Gittergraphen die Knoten sind in 2 Reihen und 3 Spalten organisiert und jeder Knoten ist mit den linken, rechten, oberen und unteren Nachbarn verbunden. Die zwei Knoten, die am weitesten auseinander liegen, sind die zwei diagonal zueinander stehende Ecken. Der Weg zwischen zwei solchen Ecken liegt durch die ganze Breite und die ganze Höhe des Gitters. In diesem Fall der maximale Abstand ist \(3\).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Pictures/SP/abstand_gitter23.png}
+\end{figure}
+
+\item In einem Kreis gibt es zwei Pfade zwischen zwei beliebige Knoten. Zum Beispiel, zwischen \textbf{A} und \textbf{F} haben wir die Pfade \textbf{ABCDEF} und \textbf{AF}. Damit der kürzeste Pfad am Längsten wird, müssen diese zwei Pfade ungefähr gleich lang sein. Die zwei Knoten, die am weitesten ausenander sind, sind also gegenüberliegend.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Pictures/SP/abstand_kreis6.png}
+\end{figure}
+\end{enumerate}
+
 \paragraph{Augabe \ref{aufgabe_panda_gebissen}}
 \begin{enumerate}[(a)]
 \item Die Knoten sind die genannten Leuten (Alice, Bob, Charlie, David, Elisabeth, Fred, Gregory, Hannah, Jakob, Lucy). Zwischen zwei Knoten gibt es eine Kante, wenn die entsprechenden Leuten sich irgendwoher schon kennen. Der Graph sieht dann so aus (wenn wir die Knoten mit dem ersten Buchstaben des Vornamens beschriften). Der Graph ist ungerichtet, weil wenn Person A Person B kennt, dann kennt Person B Person A auch.
@@ -94,6 +127,8 @@ Bob kann den gewünschten Artikel also finden und wir könen die Breitensuche ab
     \raggedleft
     \includegraphics[width=\textwidth]{Pictures/SP/panda_gebissen_3.png}
     \end{subfigure}
+\end{figure}
+\begin{figure}[H]\ContinuedFloat
     \begin{subfigure}[h]{0.45\textwidth}
     \includegraphics[width=\textwidth]{Pictures/SP/panda_gebissen_4.png}
     \end{subfigure}
@@ -114,7 +149,10 @@ Bob kann den gewünschten Artikel also finden und wir könen die Breitensuche ab
     \raggedleft
     \includegraphics[width=\textwidth]{Pictures/SP/panda_gebissen_7.png}
     \end{subfigure}
-    \begin{subfigure}[h]{0.45\textwidth}
+\end{figure}
+\begin{figure}[H]\ContinuedFloat
+	\centering
+    \begin{subfigure}[h]{0.6\textwidth}
     \includegraphics[width=\textwidth]{Pictures/SP/panda_gebissen_8.png}
     \end{subfigure}
 \end{figure}
@@ -131,7 +169,7 @@ friends = {"A":["B", "G"],
         "J":["F", "G", "H", "L"],
         "L":["J"]}
 \end{lstlisting}
-\item Dieser Graph ist klein und wir können durch Ausprobieren bestimmen, dass die zwei Knoten, die am weitesten auseinander sind, sind \"D\" und \"L\" und der Abstand zwischen diesen zwei Knoten ist 5.
+\item Dieser Graph ist klein und wir können durch Ausprobieren bestimmen, dass die zwei Knoten, die am weitesten auseinander sind, sind \textbf{D} und \textbf{L} und der Abstand zwischen diesen zwei Knoten ist \(5\).
 \begin{lstlisting}[language=Python]
 print(length_shortest_path(friends, "D", "L"))
 5
@@ -163,7 +201,7 @@ def diameter(graph):
     return maximum
 \end{lstlisting}
 Wenn wir dieses Programm ausführen, erfahren wir, dass der Diameter vom Fraundschaftsgraphen 5 ist, und dass der Abstand zwischen \texttt{D} und \texttt{L} genau diesen Wert hat.
-\begin{lstlisting}
+\begin{lstlisting}[language=Python]
 print(diameter(friends))
 (5, 'D', 'L')
 \end{lstlisting}
@@ -179,59 +217,76 @@ def shortest_path(graph, initial, goal):
 
 \paragraph{Aufgabe \ref{aufgabe_erde_mars_graph}}
 \begin{enumerate}[(a)]
-    \item Die Knoten sind die Wörter aus der Liste. Es gibt genau dann eine Kante zwischen zwei Wörter, wenn die Wörter sich um genau einen Buchstaben unterscheiden, wie zum Beispiel \texttt{MARS} und \texttt{MARK}. Der Graph ist ungerichtet, weil wenn sich ein Wort A um einen Buchstaben von einem Wort B unterscheidet, dann unterscheited sich auch Wort B vom Wort A um einen Buchstaben.
-    \item
+    \item Die Knoten sind die Wörter aus der Liste. Es gibt genau dann eine Kante zwischen zwei Wörter, wenn die Wörter sich um genau einen Buchstaben unterscheiden, wie zum Beispiel \texttt{MARS} und \texttt{MARK}. Der Graph ist ungerichtet, weil wenn sich ein Wort A um einen Buchstaben von einem Wort B unterscheidet, dann unterscheidet sich auch Wort B vom Wort A um einen Buchstaben.
+    
+    \item Der Graph sieht fol­gen­der­ma­ssen aus:
     \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{Pictures/SP/bank_zins.png}
 \end{figure}
+
+	\item Ja, der Pfad ist
+	\begin{lstlisting}
+BANK - ZANK - ZINK - ZINS.
+	\end{lstlisting}
+	
+	\item Ja, es reicht sogar ein Wort: \texttt{SIND}. Dann der Pfad wäre
+	\begin{lstlisting}
+BANK - SANK - SAND - SIND - SINN - ZINN - ZINS.
+	\end{lstlisting}
+	\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Pictures/SP/bank_zins_sind.png}
+\end{figure}	
 \end{enumerate}
 
 \paragraph{Aufgabe \ref{aufgabe_erde_mars_neighbours}}
 \begin{enumerate}[(a)]
     \item
     \begin{lstlisting}[language=Python]
-    words = {"ERDE":["EIDE", "ENDE", "ERLE"],
-        "EIDE":["EILE", "EINE", "ENDE", "ERDE"],
-        "EINE":["EIDE", "EILE", "EINS"],
-        "EINS":["EINE", "PINS", "ZINS"],
-        "ZINS":["EINS", "PINS", "ZINK", "ZINN"],
-        "ZINK":["ZINS", "ZINN", "ZANK", "ZICK"],
-        "ZANK":["BANK", "SANK", "ZACK", "ZINK"],
-        "ZACK":["ZANK", "PACK", "ZICK", "SACK"],
-        "PACK":["ZACK", "SACK", "PARK"],
-        "PARK":["PACK", "PARD", "MARK"],
-        "MARK":["PARK", "MARS"],
-        "MARS":["MARK", "MAUS"],
-        "MAUS":["MARS", "HAUS"],
-        "HAUS":["MAUS", "HASS"],
-        "HASS":["HAUS", "BASS"],
-        "BASS":["HASS"],
-        "PARD":["PARK"],
-        "BAND":["SAND", "BANK"],
-        "SAND":["BAND", "SANK"],
-        "SACK":["SANK", "ZACK", "PACK"],
-        "BANK":["BAND", "SANK", "ZANK"],
-        "SANK":["BANK", "ZANK", "SACK", "SAND"],
-        "SINN":["ZINN"],
-        "ZINN":["SINN", "ZINK", "ZINS"],
-        "ZICK":["ZINK", "ZACK"],
-        "PINS":["ZINS","EINS"],
-        "EILT":["EILE"],
-        "EILE":["EINE", "EILT", "EULE"],
-        "EULE":["EILE", "ERLE"],
-        "ERLE":["EULE", "ERDE"],
-        "ENDE":["ERDE", "EIDE", "ENTE"],
-        "ENTE":["ENDE"]}
+words = {"ERDE":["EIDE", "ENDE", "ERLE"],
+    "EIDE":["EILE", "EINE", "ENDE", "ERDE"],
+    "EINE":["EIDE", "EILE", "EINS"],
+    "EINS":["EINE", "PINS", "ZINS"],
+    "ZINS":["EINS", "PINS", "ZINK", "ZINN"],
+    "ZINK":["ZINS", "ZINN", "ZANK", "ZICK"],
+    "ZANK":["BANK", "SANK", "ZACK", "ZINK"],
+    "ZACK":["ZANK", "PACK", "ZICK", "SACK"],
+    "PACK":["ZACK", "SACK", "PARK"],
+    "PARK":["PACK", "PARD", "MARK"],
+    "MARK":["PARK", "MARS"],
+    "MARS":["MARK", "MAUS"],
+    "MAUS":["MARS", "HAUS"],
+    "HAUS":["MAUS", "HASS"],
+    "HASS":["HAUS", "BASS"],
+    "BASS":["HASS"],
+    "PARD":["PARK"],
+    "BAND":["SAND", "BANK"],
+    "SAND":["BAND", "SANK"],
+    "SACK":["SANK", "ZACK", "PACK"],
+    "BANK":["BAND", "SANK", "ZANK"],
+    "SANK":["BANK", "ZANK", "SACK", "SAND"],
+    "SINN":["ZINN"],
+    "ZINN":["SINN", "ZINK", "ZINS"],
+    "ZICK":["ZINK", "ZACK"],
+    "PINS":["ZINS","EINS"],
+    "EILT":["EILE"],
+    "EILE":["EINE", "EILT", "EULE"],
+    "EULE":["EILE", "ERLE"],
+    "ERLE":["EULE", "ERDE"],
+    "ENDE":["ERDE", "EIDE", "ENTE"],
+    "ENTE":["ENDE"]}
     \end{lstlisting}
+    
     \item
     \begin{lstlisting}[language=Python]
-    print(shortest_path(words, "ERDE", "MARS"))
-    ['ERDE', 'EIDE', 'EINE', 'EINS', 'ZINS', 'ZINK', 'ZANK', 'ZACK', 'PACK', 'PARK', 'MARK', 'MARS']
+print(shortest_path(words, "ERDE", "MARS"))
+['ERDE', 'EIDE', 'EINE', 'EINS', 'ZINS', 'ZINK', 'ZANK', 'ZACK', 'PACK', 'PARK', 'MARK', 'MARS']
     \end{lstlisting}
-    \item Die Idee ist, dass wir zuerst für den ersten Buchstaben alle 26 Möglichkeiten ausprobieren und Wörter aus der Referenzliste zu den Nachbarn hinzufügen. Dann machen wir dasselbe für den zweiten, dritten und vierten Buchstaben.
+    
+    \item Die Idee ist, dass wir zuerst für den ersten Buchstaben alle 26 Möglichkeiten ausprobieren. Wenn wir auf dieser Art und Weise ein Wort aus der Referenzliste kriegen, dann fügen wir es zu den Nachbarn hinzu. Mit dem zweiten, dritten und vierten Buchstaben gehen wir analog vor.
     \begin{lstlisting}[language=Python]
-    def compute_neighbours(nodes, node):
+def compute_neighbours(nodes, node):
     neighbours = []
     for c1 in string.ascii_uppercase:
         neighbour = c1+node[1:4]
@@ -260,9 +315,9 @@ def shortest_path(graph, initial, goal):
     \end{lstlisting}
     Dieses Programm kann eleganter gemacht werden, indem man eine Schleife anstatt von den vier ähnlichen Blöcke verwendet.
     
-    \item In \texttt{bfs\_with\_parent} rufen wir \texttt{compute\_neighbours} auf. Anstatt vom Graphen geben wir die Liste der Knoten herum. Das \texttt{backtracking} Programm muss gar nicht verändert werden.
+    \item Das Programm, welches den kürzesten Pfad berechnet, ruft zwei Programme auf: \texttt{bfs\_with\_parent} und \texttt{backtracking}. In \texttt{bfs\_with\_parent} haben wir die nicht besuchten Nachbarn aus dem Graphen in der Liste der Nachbarn Darstellung einfach ablesen können. Nun werden wir aber nur die Liste aller Knoten (auch Referenzliste in der vorherigen Teilaufgabe genannt) herumreichen. Die Nachbarn eines Knotens müssen wir also mit \texttt{compute\_neighbours} (siehe vorherige Teilaufgabe) berechnen. Das \texttt{backtracking} Programm bleibt hingegen unverändert.
     \begin{lstlisting}[language=Python]
-    def bfs_with_parent_neighbours(nodes, initial):
+def bfs_with_parent_neighbours(nodes, initial):
     queue = [initial]
     visited = {initial:None}
     while queue:
@@ -277,68 +332,65 @@ def shortest_path(graph, initial, goal):
 def shortest_path_neighbours(nodes, initial, goal):
     parents = bfs_with_parent_neighbours(nodes, initial)
     return backtracking(parents, goal)
-    \end{lstlisting}
-    
-    \item Ja, es ist möglich. Analog zu \texttt{compute\_neighbours} können wir alle 4 Möglichkeiten (nach vorne, nach hinten, nach links, nach rechts) ausprobieren und überprüfen, ob wir sie zu den Nachbarn hinzufügen können. Aber hier die Bedingung ist eine andere: die Blöcke, die in der Möbelliste (die die Wände auch aufzählt) auftauchen, werden nicht zu den Nachbarn hinzugefügt.
-    
-    \end{enumerate}
+    \end{lstlisting}  
+\end{enumerate}
 
 \paragraph{Aufgabe \ref{aufgabe_schlangenspiel}}
 \begin{enumerate}[(a)]
     \item Die Knoten sind die Kästchen, wo die Zahlen stehen. Zwischen Knoten A und Knoten B gibt es eine Kante, wenn Kästchen B aus dem Kästchen A mit einem Würfelwurf erreicht werden kann (inklusive Schlagen- und Leiterzauber). Der Graph ist gerichtet, weil man nicht zurück oder in der Gegenrichtung von Zauberkästchen gehen kann.
     \item Eine mögliche Darstellung ist:
     \begin{lstlisting}[language=Python]
-    snakes_and_ladders = {
-        0: [1, 3, 5, 11],
-        1: [3, 5, 11],
-        2: [3, 5, 6, 11],
-        3: [1, 5, 6, 11],
-        4: [1, 5, 6, 8],
-        5: [1, 6, 8, 9],
-        6: [1, 3, 8, 9],
-        7: [3, 8, 9, 11],
-        8: [3, 9, 11],
-        9: [3, 11],
-        10: [11],
-        11: []
-    }
+snakes_and_ladders = {
+    0: [1, 3, 5, 11],
+    1: [3, 5, 11],
+    2: [3, 5, 6, 11],
+    3: [1, 5, 6, 11],
+    4: [1, 5, 6, 8],
+    5: [1, 6, 8, 9],
+    6: [1, 3, 8, 9],
+    7: [3, 8, 9, 11],
+    8: [3, 9, 11],
+    9: [3, 11],
+    10: [11],
+    11: []
+}
     \end{lstlisting}
     
     \item
     \begin{lstlisting}[language=Python]
-    print(shortest_path(snakes_and_ladders, 0, 11))
-    [0, 11]
+print(shortest_path(snakes_and_ladders, 0, 11))
+[0, 11]
     \end{lstlisting}
     Bob muss eine 4 Würfeln, dann hat er beim ersten Wurf gewonnen.
     
     \item Wir können die Liste der Nachbarn so umschreiben, dass wir die gewürfelte Zahl mitgeben. Dann können wir diese Zahl als Teil vom Nachbarn herumreichen.
     \item Wir brauchen zusätzlich ein Wörterbuch, welches die Zauberfelder (Schlangen und Leiter) auf die effektiven Felder übersetzt. Auf dem kleinen Spielfeld würde das Wörterbuch so aussehen.
     \begin{lstlisting}[language=Python]
-        magic_squares = {
-            2: 5,
-            4: 11,
-            7: 1,
-            10: 3
-        }
+magic_squares = {
+    2: 5,
+    4: 11,
+    7: 1,
+    10: 3
+}
     \end{lstlisting}
-    Um die Nachbarn zu ermitteln, addieren wir die gewürfelte Zahl und dann übersetzen wir sie mit dem Wörterbuch, um "Zauberfelber" richtig zu behandeln.
+    Um die Nachbarn zu ermitteln, addieren wir die gewürfelte Zahl und dann übersetzen wir sie mit dem Wörterbuch, um ''Zauberfelber'' richtig zu behandeln.
     
-    Wir müssen jetzt bestimmen, was passiert, wenn man eine zu hohe Zahl würfelt. Das einfachste ist den Spieler in einem solchen Fall gewinnen zu lassen. Dafür mussen wir noch ein paar "Zauberfelder" einfügen.
+    Wir müssen jetzt bestimmen, was passiert, wenn man eine zu hohe Zahl würfelt. Das einfachste ist den Spieler in einem solchen Fall gewinnen zu lassen. Dafür mussen wir noch ein paar ''Zauberfelder'' einfügen.
     \begin{lstlisting}[language=Python]
-        magic_squares = {
-            2: 5,
-            4: 11,
-            7: 1,
-            10: 3,
-            12: 11,
-            13: 11,
-            14: 11,
-            15: 11
-        }
+magic_squares = {
+    2: 5,
+    4: 11,
+    7: 1,
+    10: 3,
+    12: 11,
+    13: 11,
+    14: 11,
+    15: 11
+}
     \end{lstlisting}
     Dieses Programm gibt manche Nachbarn doppelt aus, aber bei der Breitensuche, wo wir den \texttt{visited}-Vektor haben, wird es keinen Effekt auf die Korrektheit haben.
     \begin{lstlisting}[language=Python]
-    def compute_neighbours(magic_dict, node):
+def compute_neighbours(magic_dict, node):
     neighbours = []
     for i in [1, 2, 3, 4]:
         neighbour = node + i
@@ -348,7 +400,7 @@ def shortest_path_neighbours(nodes, initial, goal):
     return neighbours
     \end{lstlisting}{}
     
-    \item Zuerst modifizieren wir \texttt{compute\_neighbours} so dass wir nicht nur die Nachbarn berechnen sondern auch die gewürfelten Zahlen nicht verlieren.
+    \item Zuerst modifizieren wir \texttt{compute\_neighbours} so, dass wir nicht nur die Nachbarn berechnen sondern auch die gewürfelten Zahlen nicht verlieren.
     \begin{lstlisting}[language=Python]
 def compute_neighbours_and_dice(magic_dict, node):
     neighbours = []
