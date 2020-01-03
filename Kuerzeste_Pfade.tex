@@ -1,6 +1,6 @@
-\subsection{Länge des kürzesten Pfades}
+Die Breitensuche ist nicht nur ein Verfahren, um Knoten in einem Graphen systematisch aufzulisten. Dank der speziellen Reihenfolge, in der die Knoten besucht werden (zuerst die direkten Nachbarn, dann dessen Nachbarn und so weiter), sind wir sicher, dass wir jeden erreichbaren Knoten über einen kürzesten Pfad erreichen. In diesem Abschnitt werden wir den Algorithmus, den wir im vorherigen Abschnitt kennengelernt haben, so abändern und erweitern, dass wir zuerst den Abstand zwischen zwei Knoten in einem Graphen berechnen können und dann sogar die Knoten auf dem kürzesten Pfad auflisten.
 
-Die Breitensuche ist nicht nur ein Verfahren, um Knoten in einem Graphen systematisch aufzulisten. Dank der speziellen Reihenfolge, in der die Knoten besucht werden (zuerst die direkten Nachbarn, dann dessen Nachbarn und so weiter), sind wir sicher, dass wir jeden erreichbaren Knoten über einen kürzesten Pfad erreichen. In diesem Abschnitt werden wir den Algorithmus, den wir im vorherigen Abschnitt kennengelernt haben, so erweitern, dass wir auch den Abstand zwischen zwei Knoten in einem Graphen berechnen können.
+\subsection{Länge des kürzesten Pfades}
 
 Wie wir schon wissen, ist der \textbf{Abstand} zwischen zwei Knoten definiert als die Länge des kürzesten Pfades zwischen diesen zwei Knoten. Ein \textbf{Pfad} ist eine Folge von Knoten, die, wie eine Kette, eine Kante zum vorherigen und zum nächsten Knoten haben. Die \textbf{Länge} eines Pfades ist die Anzahl Kanten auf dem Pfad.
 
@@ -42,7 +42,7 @@ Der Wikipedia-Graph ist nicht so übersichtlich und regelmässig, wie die Graphe
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{Pictures/Wikipedia.PNG} 
-    \caption{Die Verlinkung von Wikipedia-Artikeln als Graphen.}
+    \caption{Die Verlinkung von Wikipedia-Artikeln als Graph.}
     \label{fig:wikipedia_graph}
 \end{figure}
 
@@ -96,7 +96,7 @@ Bob ist der beste Freund von Alice. Bob kennt ausserdem Charlie und David. Charl
 \end{displayquote}
 
 \begin{enumerate}[(a)]
-    \item Formalisiere die Freundschaften von Alice und ihrer Freunden als Graphen. Was sind die Knoten? Wann sind zwei Knoten durch eine Kante verbunden? Ist der Graph gerichtet oder ungerichtet?
+    \item Formalisiere die Freundschaften von Alice und ihrer Freunden als Graph. Was sind die Knoten? Wann sind zwei Knoten durch eine Kante verbunden? Ist der Graph gerichtet oder ungerichtet?
     \item Führe den modifizierten Breitensuchealgorithmus aus, um den Abstand im Freundschaftsgraphen zwischen Alice und Lucy zu bestimmen.
     \item Stelle den Freundschaftsgraphen in Python als Liste der Nachbarn dar.
     \item Führe das Programm \ref{lst:length_shortest_path} auf dem Freundschaftsgraphen aus. Wähle Start- und Endknoten so, dass der Abstand (im Graphen) am grössten ist. Über wie vielen Ecken kennt jeder jeden in diesem Freundschaftsgraphen? 
@@ -122,13 +122,13 @@ Norbert hat eine ziemlich gute mentale Karte vom Zimmer. Er weiss, dass das Zimm
     \caption{Das Zimmer, wo sich Norbert befindet. In braun sind die Möbel markiert, unter welchen Norbert nicht passt. Norbert ist unten links, die Aufladestation ist unten rechts.}
     \label{fig:norbert_zimmer}
 \end{figure}
-Wir werden jetzt das Zimmer als Graphen modellieren, so dass die Anzahl Schritte, die Norbert bis zur Aufladestation fahren muss, dem Abstand zwischen den Knoten \texttt{N} und \texttt{A} entspricht.
+Wir werden jetzt das Zimmer als Graph modellieren, so dass die Anzahl Schritte, die Norbert bis zur Aufladestation fahren muss, dem Abstand zwischen den Knoten \texttt{N} und \texttt{A} entspricht.
 
 Die Knoten vom Zimmergraphen sind die Fliesen und es gibt genau dann eine Kante zwischen zwei Knoten, wenn Norbert von der einen Fliese bis zur anderen in einem seiner Schritten fahren kann. Die Möbel sind als isolierte Knoten (das heisst, Knoten ohne Kanten) modelliert.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Pictures/SP/norbert_graph.png}
-    \caption{Das Zimmer, wo sich Norbert befindet, als Graphen modelliert. Jede Fliese ist ein Knoten (mit deren Koordinaten als Name). Wenn Norbert in einem Schitt von einer Fliese zur anderen fahren kann, gibt es zwischen den entsprechenden Knoten eine Kante.}
+    \caption{Das Zimmer, wo sich Norbert befindet, als Graph modelliert. Jede Fliese ist ein Knoten (mit deren Koordinaten als Name). Wenn Norbert in einem Schitt von einer Fliese zur anderen fahren kann, gibt es zwischen den entsprechenden Knoten eine Kante.}
     \label{fig:norbert_graph}
 \end{figure}
 Wir wissen schon, wie wir die Breitensuche benutzen können, um in einem solchen Graphen den Abstand zwischen \texttt{N} und \texttt{A} zu finden.
@@ -145,7 +145,7 @@ Wir werden jetzt Norbert den Staubsauger-Roboter helfen, so schnell wie möglich
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{Pictures/SP/norbert_klein_graph.png}
-    \caption{Ein kleineres Zimmer für Norbert, schon als Graphen modelliert.}
+    \caption{Ein kleineres Zimmer für Norbert, schon als Graph modelliert.}
     \label{fig:norbert_klein_graph}
 \end{figure}
 Nehmen wir an, wir führen jetzt die Breitensuche aus. Wir fangen bei \texttt{N} an und fügen \texttt{01} und \texttt{10} in die Warteschlange ein, weil sie die Nachbarn von \texttt{N} sind. Dann entfernen wir \texttt{01} aus der Warteschlange und fügen dessen Nachbarn hinzu: \texttt{02} und \texttt{11}. Wir machen so weiter, bis wir \texttt{A} gefunden haben.  Die Knoten werden in der folgenden Reihenfolge besucht.
@@ -181,7 +181,7 @@ Betrachte folgenden Graphen.
 \end{aufgabe}
 
 \begin{aufgabe}\label{aufgabe_shortest_path_alg}
-Überlege, wie du den Breitensuchealgorithmus verändern musst, um den kürzesten Pfad zwischen zwei Knoten zu finden. Du kannst deine Erkenntnisse aus Aufgabe \ref{aufgabe_find_shortest_path} benutzen.
+Überlege wie du den Breitensuchealgorithmus verändern musst, um den kürzesten Pfad zwischen zwei Knoten zu finden. Du kannst deine Erkenntnisse aus Aufgabe \ref{aufgabe_find_shortest_path} benutzen.
 
 Welche zusätzliche Informationen musst du speichern? Wo würdest du es machen?
 Wie verwendest du diese zusätzliche Informationen, um den Pfad zu finden?
@@ -311,7 +311,7 @@ Zunächst werden wir mit einem kleineren Spielfeld arbeiten.
     \includegraphics[width=\textwidth]{Pictures/SP/schlangen_spiel.png}
 \end{figure}
 \begin{enumerate}[(a)]
-    \item Formalisiere das Schlangenspiel als Graphen. Was sind die Knoten? Wann gibt es eine Kante zwischen zwei Knoten? Ist der Graph gerichtet oder ungerichtet?
+    \item Formalisiere das Schlangenspiel als Graph. Was sind die Knoten? Wann gibt es eine Kante zwischen zwei Knoten? Ist der Graph gerichtet oder ungerichtet?
     \item Schreibe das kleinere Spielfeld in der Liste der Nachbarn Darstellung.
     \item Was muss Bob würfeln, um zu gewinnen? Führe das Programm aus der Aufgabe \ref{aufgabe_shortest_path} aus.
     \item Schreibe das Programm aus der Aufgabe \ref{aufgabe_shortest_path} so um, dass es die Zahlen ausgibt (1, 2, 3, 4), die Bob erzielen muss.

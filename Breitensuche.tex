@@ -2,9 +2,9 @@
 Wir betrachten wieder das Tramliniennetz von Zürich und zeichnen den Ausschnitt mit den 10 Knoten
 \begin{multicols}{2}
 \begin{itemize}
-    \item {\bf{B}}: Bellvue
+    \item {\bf{B}}: Bellevue
     \item {\bf{C}}: Central
-    \item {\bf{E/H}}: ETH/Universitätsspital
+    \item {\bf{E/U}}: ETH/Universitätsspital
     \item {\bf{HB}}: Haldenbach
     \item {\bf{HE}}: Haldenegg
     \item {\bf{HP}}: Hottingerplatz
@@ -15,7 +15,12 @@ Wir betrachten wieder das Tramliniennetz von Zürich und zeichnen den Ausschnitt
 
 \end{itemize}
 \end{multicols}
-\noindent vereinfacht als Graph auf. Wir haben die Knoten bewusst alphabetisch aufgelistet, denn immer wenn wir alle Nachbarn einer Haltestelle betrachten müssen, werden wir dies in alphabetischer Reihenfolge tun. 
+\noindent vereinfacht als Graphen auf. Wir haben die Knoten bewusst alphabetisch aufgelistet, denn immer, wenn wir alle Nachbarn einer Haltestelle betrachten müssen, werden wir dies in alphabetischer Reihenfolge tun.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Pictures/Tram2.PNG}
+    \caption{Ein Ausschnitt der Tram- und Buslinien in Zürich, als Graph formalisiert}
+\end{figure}
 Damit wir mit der Breitensuche beginnen können, müssen wir einen Startknoten auswählen. Wir wählen hier wie im Beispiel in der Einführung die Kantonsschule, also den Knoten {\bf{KS}} als Startknoten und schreiben ihn gleich auf eine Warteliste. Wir arbeiten also wiedereinmal mit dem ''First In, First Out''-Prinzip, denn wir gehen in jedem Schritt so vor, dass wir den ersten Knoten von der Warteliste entfernen und dafür seine noch unbesuchten Nachbarn der Warteliste anhängen. Im folgenden verwenden wir 3 Farben für die Knoten um die Breitensuche zu veranschaulichen. Blaue Knoten sind jene, die die Breitensuche noch nicht erreicht hat. Orange Knoten sind die besuchten Knoten, welche noch auf der Warteliste stehen. Graue Knoten sind jene, die wir bereits wieder von der Warteliste entfernt haben. Überlege anhand des Einführungsbeispiels, warum es so wichtig ist die besuchten Knoten zu markieren!
 
 \begin{figure}[H]
@@ -98,7 +103,7 @@ Die Breitensuche besucht die Knoten also in der Reihenfolge
 $$ \text{ \bf{KS,E/U,KH,P,HB,HE,B,HP,N,C}} $$
 
 \subsection{Der Algorithmus in Worten}
-Wir wollen nun den Suchalgorithmus, welchen wir oben graphisch an einem Beispiel aufgezeichnet haben, allgemein formalisieren. In einer ersten Version geben wir dem Algorithmus keine Abbruchsbedingung, das heisst die Breitensuche läuf weiter, bis alle möglichen Knoten einmal besucht wurden. Um uns jeweils zu merken, welche Knoten wir als nächstes betrachten wollen, verwenden wir eine Warteliste. Um uns zu merken, welche Knoten wir bereits betrachtet haben, markieren wir diese als besucht. So können wir vermeiden, dass ein Knoten mehrmals bearbeitet wird.\\
+Wir wollen nun den Suchalgorithmus, welchen wir oben graphisch an einem Beispiel aufgezeichnet haben, allgemein formalisieren. In einer ersten Version geben wir dem Algorithmus keine Abbruchsbedingung, das heisst die Breitensuche läuft weiter, bis alle möglichen Knoten einmal besucht wurden. Um uns jeweils zu merken, welche Knoten wir als nächstes betrachten wollen, verwenden wir eine Warteliste. Um uns zu merken, welche Knoten wir bereits betrachtet haben, markieren wir diese als besucht. So können wir vermeiden, dass ein Knoten mehrmals bearbeitet wird.\\
 
  \noindent {\bf{Input:}} Ein Graph $G=(V,E)$ und ein Startknoten $s \in V$.
 
@@ -112,19 +117,19 @@ Wir wollen nun den Suchalgorithmus, welchen wir oben graphisch an einem Beispiel
 \end{enumerate}
 
 \begin{aufgabe} \label{newinitial}
-In welcher Reihenfolge besucht die Breitensuche die Haltestellen, wenn wir statt bei der Kantonsschule beim Bellvue starten?
+In welcher Reihenfolge besucht die Breitensuche die Haltestellen, wenn wir statt bei der Kantonsschule beim Bellevue starten?
 \end{aufgabe}
 
 \begin{aufgabe} \label{directed}
 Wir betrachten immer noch den Graphen in Abbildung \ref{fig:BS1}. Nun
-treten bei verschiedenen Trams technische Störungen auf, so dass die Strecken Bellvue - Platte und Central - Hottingerplatz jeweils nur noch in dieser einen Richtung befahren werden können. Zeichne den gerichteten Graphen (mit den gleichen 10 Knoten) der zu dieser Situation passt. In welcher Reihenfolge besucht die Breitensuche jetzt die Knoten wenn wir wieder beim Bellvue starten? 
+treten bei verschiedenen Trams technische Störungen auf, so dass die Strecken Bellevue - Platte und Central - Hottingerplatz jeweils nur noch in dieser einen Richtung befahren werden können. Zeichne den gerichteten Graphen (mit den gleichen 10 Knoten), der zu dieser Situation passt. In welcher Reihenfolge besucht die Breitensuche jetzt die Knoten, wenn wir wieder beim Bellevue starten? 
 \end{aufgabe}
 
 
 Alice und Bob spielen das Wikipedia-Spiel. Es funktioniert wie folgt: Alice gibt Bob zwei Wikipedia-Artikel vor und dieser muss durch das Klicken von möglichst wenigen Links von einem Artikel zum anderen kommen. Wir können Wikipedia als Graphen darstellen, indem wir für jeden Artikel einen Knoten zeichnen und für einen Link in Artikel $A$ zu Artikel $B$ eine gerichtete Kante von $A$ nach $B$. Der tatsächliche Graph von allen deutschen Wikipedia-Artikeln hat so fast 2.5 Millionen Knoten und noch viel mehr Kanten. Wir betrachten nur einen sehr kleinen Ausschnitt davon mit den folgenden Artikeln:
 \begin{multicols}{2}
 \begin{itemize}
-    \item {\bf{B}}: Bellvue
+    \item {\bf{B}}: Bellevue
     \item {\bf{BS}}: Breitensuche
     \item {\bf{D}}: Deutschland
     \item {\bf{E}}: Eisenbahn
@@ -152,7 +157,7 @@ Alice sagt zu Bob: ''Öffne den Wikipedia-Artikel über die Breitensuche und fin
 
 In Aufgabe \ref{Wikipedia} haben wir eine Abbruchsbedingung in Form eines gesuchten Knotens. Wir können also der Breitensuche als Input zusätzlich zum Graphen und Startknoten noch einen Zielknoten geben und den Algorithmus abbrechen, sobald der Zielknoten als besucht markiert wurde.
 
-Jetzt wäre es natürlich schön wenn wir den Algorithmus so abändern könnten, dass er uns zusätzlich sagt, wieviele Klicks Bob mindestens braucht und was eine mögliche optimale Lösung wäre. Doch bevor wir dieses Problem lösen, wollen wir zuerst die Breitensuche in Python implementieren.
+Jetzt wäre es natürlich schön, wenn wir den Algorithmus so abändern könnten, dass er uns zusätzlich sagt, wieviele Klicks Bob mindestens braucht und was eine mögliche optimale Lösung wäre. Doch bevor wir dieses Problem lösen, wollen wir zuerst die Breitensuche in Python implementieren.
 
 \subsection{Der Algorithmus in Python}
 Wir wollen ein Programm für die Breitensuche schrieben und dieses gleich an unserem Tramlinienbeispiel testen.
@@ -206,7 +211,7 @@ Nun wollen sie ein Programm welches ihnen statt der Liste aller besuchten Knoten
 
 \subsection{Kontrollfragen}
 \begin{enumerate}
-    \item Wie würdest du einem Mitschüler, welcher diesen ersten Teil der Stunde verpasst hat in wenigen Sätzen erklären, was die Breitensuche ist?
+    \item Wie würdest du einem Mitschüler, welcher diesen ersten Teil der Stunde verpasst hat, in wenigen Sätzen erklären, was die Breitensuche ist?
     \item Du kennst bereits viele verschiedene Zusammenhänge, welche sich als Graphen darstellen lassen. Überlege dir eine ''Alltagssituation'', bei der du die Breitensuche verwenden könntest.
 \end{enumerate}
 Welche der folgenden Schüler haben recht? Welche nicht? Begründe!

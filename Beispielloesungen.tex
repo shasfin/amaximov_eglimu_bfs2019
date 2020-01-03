@@ -284,7 +284,7 @@ print(shortest_path(words, "ERDE", "MARS"))
 ['ERDE', 'EIDE', 'EINE', 'EINS', 'ZINS', 'ZINK', 'ZANK', 'ZACK', 'PACK', 'PARK', 'MARK', 'MARS']
     \end{lstlisting}
     
-    \item Die Idee ist, dass wir zuerst für den ersten Buchstaben alle 26 Möglichkeiten ausprobieren. Wenn wir auf dieser Art und Weise ein Wort aus der Referenzliste kriegen, dann fügen wir es zu den Nachbarn hinzu. Mit dem zweiten, dritten und vierten Buchstaben gehen wir analog vor.
+    \item Die Idee ist, dass wir zuerst für den ersten Buchstaben alle 26 Möglichkeiten ausprobieren. Wenn wir auf diese Art und Weise ein Wort aus der Referenzliste kriegen, dann fügen wir es zu den Nachbarn hinzu. Mit dem zweiten, dritten und vierten Buchstaben gehen wir analog vor.
     \begin{lstlisting}[language=Python]
 def compute_neighbours(nodes, node):
     neighbours = []
