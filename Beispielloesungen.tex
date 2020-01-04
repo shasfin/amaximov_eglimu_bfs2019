@@ -633,7 +633,7 @@ def compute_neighbours_and_dice(magic_dict, node):
     \end{lstlisting}
     
     Dann schreiben wir \texttt{bfs\_with\_parent} um, so dass wir die gewürfelten Zahlen nicht verlieren.
-    \begin{lstlisting}
+    \begin{lstlisting}[language=Python]
 def bfs_with_parent_and_dice(magic_dict, initial):
     queue = [initial]
     visited = {initial:(None, None)}
