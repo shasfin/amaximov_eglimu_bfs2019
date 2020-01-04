@@ -28,6 +28,20 @@
 \usepackage{amsfonts}
 %--------------------------------------
 
+%Frames
+%--------------------------------------
+\usepackage{framed}
+
+%Colors
+%--------------------------------------
+\usepackage{xcolor}
+\definecolor{blue-violet}{rgb}{0.54, 0.17, 0.89}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%--------------------------------------
 \usepackage{multicol}
 \usepackage[shortlabels]{enumitem}
 
@@ -40,13 +54,8 @@
 
 %Listings
 %--------------------------------------
+\usepackage{ulem}
 \usepackage{listings}
-\usepackage{xcolor}
- 
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
  
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
@@ -67,7 +76,7 @@
     tabsize=2,
 }
  
-\lstset{style=mystyle}
+\lstset{style=mystyle,moredelim=[is][\sout]{|}{|}}
 %--------------------------------------
 
 
@@ -88,16 +97,21 @@
 \input{Breitensuche.tex}
 \newpage
 
-\section{Kürzeste Wege}
-\input{Kuerzeste_Wege.tex}
+\section{Kürzeste Pfade}\label{kuerzeste_pfade}
+\input{Kuerzeste_Pfade.tex}
 \newpage
 
 \section{Zusammenfassung}
 \input{Zusammenfassung.tex}
 \newpage
 
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{refs}
 \newpage
+
 \section{Beispiellösungen}
 \input{Beispielloesungen.tex}
+
 
 \end{document}

@@ -1,4 +1,4 @@
-\paragraph{ Aufgabe \ref{newinitial}:} Wenn wir bei der Station ''Bellvue'' starten ist die Reihenfolge: $$ \text{\bf{B,KH,HP,KS,N,E/U,P,C,HB,HE}}$$
+\paragraph{ Aufgabe \ref{newinitial}:} Wenn wir bei der Station ''Bellevue'' starten ist die Reihenfolge: $$ \text{\bf{B,KH,HP,KS,N,E/U,P,C,HB,HE}}$$
 
 \paragraph{Aufgabe \ref{directed}:} Wir betrachten jetzt den folgenden Graphen:\\
 \begin{figure}[H]
@@ -10,7 +10,7 @@
 Die Reihenfolge in welcher die Breitensuche die Knoten besucht ist:
 $$ \text{\bf{B,KH,HP,KS,E/U,P,HB,HE,C,N}}$$
 
-\paragraph{Aufgabe \ref{Wikipedia}}: Wir beginnen die Breitensuche beim Wikipedia-Artikel über die Breitensuche; also bei dem Knoten {\bf{BS}}. Die Reihenfolge ist dann
+\paragraph{Aufgabe \ref{Wikipedia}:} Wir beginnen die Breitensuche beim Wikipedia-Artikel über die Breitensuche; also bei dem Knoten {\bf{BS}}. Die Reihenfolge ist dann
 $$ \text{\bf{BS,D,G,K,L,E,S,U-B,Z,SBZ}}.$$
 Bob kann den gewünschten Artikel also finden und wir könen die Breitensuche abbrechen bevor wir den Knoten {\bf{B}} besucht haben.
 
@@ -87,11 +87,19 @@ Der Abstand zwischen \textbf{C} und \textbf{E} ist \(2\). Zwischen diesen Knoten
     \includegraphics[width=0.5\textwidth]{Pictures/SP/abstand_gitter23.png}
 \end{figure}
 
-\item In einem Kreis gibt es zwei Pfade zwischen zwei beliebige Knoten. Zum Beispiel, zwischen \textbf{A} und \textbf{F} haben wir die Pfade \textbf{ABCDEF} und \textbf{AF}. Damit der kürzeste Pfad am Längsten wird, müssen diese zwei Pfade ungefähr gleich lang sein. Die zwei Knoten, die am weitesten ausenander sind, sind also gegenüberliegend.
+\item In einem Kreis gibt es zwei Pfade zwischen zwei beliebige Knoten. Zum Beispiel, zwischen \textbf{A} und \textbf{F} haben wir die Pfade \textbf{ABCDEF} und \textbf{AF}. Damit der kürzeste Pfad am Längsten wird, müssen diese zwei Pfade ungefähr gleich lang sein. Die zwei Knoten, die am weitesten auseinander sind, sind also gegenüberliegend.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{Pictures/SP/abstand_kreis6.png}
 \end{figure}
+\end{enumerate}
+
+\paragraph{Aufgabe \ref{laenge_kontrollfragen}}
+\begin{enumerate}[(a)]
+\item Der Abstand ist die Länge des kürzesten Pfades zwischen Start- und Zielknoten.
+\item Die Breitensuche besucht die Knoten von einem Graphen geordnet nach ihrem Abstand vom Startknoten. Die Knoten, die näher sind, werden zuerst besucht.
+\item Gregory hat teilweise recht. Es kann auch sein, dass der Knoten doch im Graphen ist, einfach in einer anderen Zusammenhangskomponente.
+\item Wir müssen uns zusätzlich für jeden Knoten dessen Abstand vom Startknoten merken.
 \end{enumerate}
 
 \paragraph{Augabe \ref{aufgabe_panda_gebissen}}
@@ -101,7 +109,6 @@ Der Abstand zwischen \textbf{C} und \textbf{E} ist \(2\). Zwischen diesen Knoten
         \centering
         \includegraphics[width=\textwidth]{Pictures/SP/panda_gebissen_graph.png}
         \caption{Freundschaftsgraph}
-        \label{fig:Gregory}
     \end{figure}
 
 \item Wir markieren in grau die Knoten, die schon besucht worden sind und in Orange diejenigen, die sich in der Warteschlange befinden. In der Warteschlange schreiben wir unter dem Knoten auch den Abstand vom Startknoten auf.
@@ -174,23 +181,23 @@ friends = {"A":["B", "G"],
 print(length_shortest_path(friends, "D", "L"))
 5
 \end{lstlisting}
-Wir können aber auch ein Programm schreiben, das uns die Länge vom längsten kürzesten Pfad (den Diameter) ausrechnet. Dafür werden wir zunächst Programm \ref{lst:length_shortest_path} so umschreiben, dass es die Längen von allen kürzesten Pfaden vom Startknoten aus ausgibt. Die zwei grössten Änderungen sind, dass wir die Abstände nun auch in \texttt{visited} reinschreiben, so dass wir sie ausgeben können, und dass wir die Suche nicht mehr abbrechen, wenn wir den Endknoten gefunden haben (deswegen geben wir dem Programm auch keinen Endknoten mit).
+Wir können aber auch ein Programm schreiben, das uns die Länge vom längsten kürzesten Pfad (den Durchmesser) ausrechnet. Dafür werden wir zunächst Programm \ref{lst:length_shortest_path} so umschreiben, dass es die Längen von allen kürzesten Pfaden vom Startknoten aus ausgibt. Die zwei grössten Änderungen sind, dass wir die Abstände nun auch in \texttt{visited} reinschreiben, so dass wir sie ausgeben können, und dass wir die Suche nicht mehr abbrechen, wenn wir den Endknoten gefunden haben (deswegen geben wir dem Programm auch keinen Endknoten mit).
 \begin{lstlisting}[language=Python, caption={Programm, welches die Abstände vom Startknoten zu allen anderen erreichbaren Knoten ausrechnet}]
 def length_all_shortest_paths_from(graph, initial):
     queue = [(initial, 0)]
     visited = {initial: 0}
     while queue:
         (node, length) = queue.pop(0)
-        newlength = length + 1
+        new_length = length + 1
         neighbours = graph[node]
         for neighbour in neighbours:
             if neighbour not in visited.keys():
-                queue.append((neighbour, newlength))
-                visited[neighbour] = newlength
+                queue.append((neighbour, new_length))
+                visited[neighbour] = new_length
     return visited
 \end{lstlisting}
-Jetzt können wir dieses Programm verwenden, um den Diameter auszurechnen. Wir gehen durch alle Knoten im Graphen durch und rufen \texttt{length\_all\_shortest\_paths\_from} auf. Das gibt uns für jeden Knoten die Abstände zu allen anderen erreichbaren Knoten im Graphen. Dann nehmen wir das Maximum über all diesen kürzesten Pfade und somit bestimmen wir den Diameter.
-\begin{lstlisting}[language=Python, caption={Programm, welches den Diameter von einem Graphen bestimmt}]
+Jetzt können wir dieses Programm verwenden, um den Durchmesser auszurechnen. Wir gehen durch alle Knoten im Graphen durch und rufen \texttt{length\_all\_shortest\_paths\_from} auf. Das gibt uns für jeden Knoten die Abstände zu allen anderen erreichbaren Knoten im Graphen. Dann nehmen wir das Maximum über all diesen kürzesten Pfade und somit bestimmen wir den Durchmesser.
+\begin{lstlisting}[language=Python, caption={Programm, welches den Durchmesser von einem Graphen bestimmt}]
 def diameter(graph):
     maximum = (0, "from", "to")
     for node in graph.keys():
@@ -200,11 +207,155 @@ def diameter(graph):
             maximum = (all_shortest_from[farthest_from_node], node, farthest_from_node)
     return maximum
 \end{lstlisting}
-Wenn wir dieses Programm ausführen, erfahren wir, dass der Diameter vom Fraundschaftsgraphen 5 ist, und dass der Abstand zwischen \texttt{D} und \texttt{L} genau diesen Wert hat.
+Wenn wir dieses Programm ausführen, erfahren wir, dass der Durchmesser vom Fraundschaftsgraphen 5 ist, und dass der Abstand zwischen \texttt{D} und \texttt{L} genau diesen Wert hat.
 \begin{lstlisting}[language=Python]
 print(diameter(friends))
 (5, 'D', 'L')
 \end{lstlisting}
+\end{enumerate}
+
+\paragraph{Aufgabe \ref{aufgabe_norbert}}
+\begin{enumerate}[(a)]
+\item Die Knoten vom Zimmergraphen sind die Fliesen und es gibt genau dann eine Kante zwischen zwei Knoten, wenn Norbert von der einen Fliese bis zur anderen in einem seiner Schritten fahren kann. Der Graph ist ungerichtet, weil Norbert sich umdrehen und zurückfahren kann. Die Möbel sind als isolierte Knoten modelliert, das heisst, Knoten ohne Kanten.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/SP/norbert_graph.png}
+    \caption{Das Zimmer, wo sich Norbert befindet, als Graph modelliert. Jede Fliese ist ein Knoten (mit deren Koordinaten als Name). Wenn Norbert in einem Schitt von einer Fliese zur anderen fahren kann, gibt es zwischen den entsprechenden Knoten eine Kante.}
+    \label{fig:norbert_graph}
+\end{figure}
+\item Leider, mit 15 Schritten kann Norbert die Aufladestation nicht erreichen, denn der gesuchte Abstand ist 18. Die Knoten werden in der folgenden Reihenfolge besucht.
+\begin{lstlisting}
+visited = ["N", "01", "02", "12", "22", "21", "32", "31", "42", "41", "43", "52", "51","44", "53", "50", "45", "54", "46", "55", "36", "47", "56", "26", "25", "24", "14", "15", "05", "06", "07"]
+\end{lstlisting}
+Beobachte, dass die Möbelknoten gar nicht besucht worden sind, weil sie von \texttt{N} aus nicht erreichbar sind.
+\item Wir können die Aufladestation als Startknoten nehmen und die Breitensuche ausführen. Für jeden besuchten Knoten merken wir uns den Abstand bis zur Aufladestation. Wenn wir den Abstand von der Aufladestation bis zu jedem anderen erreichbaren Knoten haben, wählen den grössten. Wenn Norbert jedes Mal, wenn er nur noch Akku für diese Anzahl Schritte hat, zurück zur Aufladestation fährt, wird er nie wieder piepsend um Hilfe mitten im Zimmer stehen bleiben.
+
+Diese Anzahl ist 18.
+\item Das Zimmer in der ''Liste der Nachbarn''-Darstellung:
+\begin{lstlisting}[language=Python]
+big_room = {"N" : ["01"],
+        "01": ["02"],
+        "02": ["12"],
+        "03": [],
+        "04": [],
+        "05": ["06", "15"],
+        "06": ["05", "07"],
+        "07": ["A"],
+        "10": [],
+        "11": [],
+        "12": ["22"],
+        "13": [],
+        "14": ["15", "24"],
+        "15": ["05", "14"],
+        "16": [],
+        "A" : ["07"],
+        "20": [],
+        "21": ["22", "31"],
+        "22": ["12", "21", "32"],
+        "23": [],
+        "24": ["14", "25"],
+        "25": ["15", "24", "26"],
+        "26": ["25", "36"],
+        "27": [],
+        "30": [],
+        "31": ["21", "32", "41"],
+        "32": ["22", "31", "42"],
+        "33": [],
+        "34": [],
+        "35": [],
+        "36": ["26", "46"],
+        "37": [],
+        "40": [],
+        "41": ["31", "42", "51"],
+        "42": ["32", "41", "43", "52"],
+        "43": ["42", "44", "53"],
+        "44": ["43", "45", "54"],
+        "45": ["44", "46", "55"],
+        "46": ["36", "45", "47", "56"],
+        "47": ["46"],
+        "50": ["51"],
+        "51": ["41", "50", "52"],
+        "52": ["42", "51", "53"],
+        "53": ["43", "52", "54"],
+        "54": ["44", "53", "55"],
+        "55": ["45", "54", "56"],
+        "56": ["46", "55"],
+        "57": []}
+\end{lstlisting}
+
+\item Wir führen das Programm \texttt{length\_shortest\_path} aus. Den Graphen haben wir in der vorherigen Teilaufgabe aufgeschrieben. Der Startknoten ist \texttt{N} und der Zielknoten ist \texttt{A}.
+\begin{lstlisting}[language=Python]
+print (length_shortest_path(big_room, "N", "A"))
+18
+\end{lstlisting}
+\end{enumerate}
+
+\paragraph{Aufgabe \ref{aufgabe_find_shortest_path}}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Pictures/SP/shortest_path_graph.png}
+\end{figure}
+\begin{enumerate}[(a)]
+\item Wir werden nicht nur die Knoten in die Warteschlange einfügen, sondern auch jenen Knoten, wegen welches er zur Warteschlange hinzugefügt worden ist.
+
+Am Anfang schreiben wir \textbf{0} in die Warteschlange.
+\begin{lstlisting}[mathescape]
+0
+-
+\end{lstlisting}
+Dann entfernen wir die \textbf{0} und fügen deren Nachbarn hinzu und wir merken uns (unter den Knoten), dass wir sie von \textbf{0} aus gefunden haben.
+\begin{lstlisting}[mathescape]
+|0| 1 2
+|-| 0 0
+\end{lstlisting}
+Dann entfernen wir die \textbf{1} und fügen deren Nachbarn hinzu: \textbf{3} und \textbf{4}. Wir merken uns auch, dass wir die neuen Knoten von der \textbf{1} aus gefunden haben.
+\begin{lstlisting}[mathescape]
+|0| |1| 2 3 4
+|-| |0| 0 1 1
+\end{lstlisting}
+Die \textbf{2} und die \textbf{3} haben keine unbesuchte Nachbarn. Von der \textbf{4} aus finden wir drei weitere Knoten. Die Warteschlange sieht so aus:
+\begin{lstlisting}[mathescape]
+|0| |1| |2| |3| |4| 5 6 7
+|-| |0| |0| |1| |1| 4 4 4
+\end{lstlisting}
+Jetzt entfernen wir die \textbf{5} und fügen \textbf{8} und \textbf{9} hinzu.
+\begin{lstlisting}[mathescape]
+|0| |1| |2| |3| |4| |5| 6 7 8 9
+|-| |0| |0| |1| |1| |4| 4 4 5 5
+\end{lstlisting}
+Nun haben wir den gesuchten Knoten gefunden. Aus der Warteschlange sehen wir, dass wir zur \textbf{9} aus der \textbf{5} gekommen waren, und zur \textbf{5} aus der \textbf{4}, zur \textbf{4} aus der \textbf{1} und zur \textbf{1} aus der \textbf{0}. Der kürzeste Pfad ist also:
+\begin{lstlisting}[mathescape]
+0 - 1 - 4 - 5 - 9.
+\end{lstlisting}
+
+\item Wir können die Warteschlange von vorher nehmen und weitermachen, bis wir die \textbf{10} finden.
+\begin{lstlisting}[mathescape]
+|0| |1| |2| |3| |4| |5| 6 7 8 9
+|-| |0| |0| |1| |1| |4| 4 4 5 5
+\end{lstlisting}
+Wir entfernen die \textbf{6} und fügen deren Nachbarn hinzu.
+\begin{lstlisting}[mathescape]
+|0| |1| |2| |3| |4| |5| |6| 7 8 9 7 10
+|-| |0| |0| |1| |1| |4| |4| 4 5 5 6 6
+\end{lstlisting}
+Wir haben nun die \textbf{10} gefunden, und den kürzesten Pfad können wir wieder aus der Warteschlange ablesen:
+\begin{lstlisting}[mathescape]
+0 - 1 - 4 - 6 - 10.
+\end{lstlisting}
+
+\item Aus der Warteschlange aus den vorherigen Teilaufgaben können wir den kürzesten Pfad zwischen \textbf{0} und \textbf{6} ablesen:
+\begin{lstlisting}[mathescape]
+0 - 1 - 4 - 6.
+\end{lstlisting}
+Da der Graph ungerichtet ist, können wir diesen Pfad einfach umdrehen, um den kürzesten Pfad zwischen \textbf{6} und \textbf{0} zu finden:
+\begin{lstlisting}[mathescape]
+6 - 4 - 1 - 0.
+\end{lstlisting}
+
+\item In genau diesem Fall können wir etwas wiederverwenden. Analog zur vorherigen Teilaufgabe können wir den kürzesten Pfad zwischen \textbf{9} und \textbf{0} finden. Da die \textbf{1} auf diesem Pfad ist, haben wir auch den kürzesten Pfad von \textbf{9} bis \textbf{1} gefunden.
+
+Im Allgemeinen gilt das aber nicht. Wenn wir, zum Beispiel, den kürzesten Pfad zwischen \textbf{9} und \textbf{2} bestimmen möchten, dann müssen wir die ganze Breitensuche von der \textbf{9} aus ausführen.
 \end{enumerate}
 
 \paragraph{Aufgabe \ref{aufgabe_shortest_path}}
@@ -333,6 +484,75 @@ def shortest_path_neighbours(nodes, initial, goal):
     parents = bfs_with_parent_neighbours(nodes, initial)
     return backtracking(parents, goal)
     \end{lstlisting}  
+\end{enumerate}
+
+\paragraph{Aufgabe \ref{pfad_kontrollfragen}}
+\begin{enumerate}[(a)]
+\item Die Breitensuche besucht alle Knoten geordnet nach ihrem Abstand vom Startknoten. Das heisst, dass sie Knoten, die näher sind, früher besucht, als Knoten, die weiter sind. Auf diese Art besucht die Breitensuche jeden Knoten über den kürzesten Pfad zu diesem Knoten.
+
+\item Wir müssen für jeden Knoten dessen Elternknoten speichern, das heisst jenen Knoten, der entfernt wurde, als dieser Knoten als dessen Nachbar hinzugefügt worden ist.
+
+\item Backtracking nennt man den Prozess, die Elternknoten zurückzuverfolgen. Man braucht ihn, um nach der abgeänderten Breitensuche den kürzesten Pfad aus den Elternknoten zu bestimmen.
+
+\item Gregory hat recht. Wenn wir alle Elternknoten vom Startknoten ausgehend berechnet haben, können wir einen beliebigen Knoten als Zielknoten auswählen und nur das Backtracking darauf ausführen.
+
+\item Hannahs Aussage stimmt nicht. Betrachte folgenden Graphen. Wir haben die ''roten Pfeilen'' schon eingezeichnet. Wenn wir die roten Pfeilen zurückverfolgen, werden wir nie den kürzesten Pfad zwischen \textbf{B} und \textbf{C} finden.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{Pictures/SP/eltern_kreis3.png}
+    \end{figure}
+\end{enumerate}
+
+\paragraph{Aufgabe \ref{wikipedia_kontrollaufgabe}}
+\begin{enumerate}[(a)]
+\item Die Breitensuche besucht die Knoten in folgender Reihenfolge. Die Elternknoten befinden sich jeweils unter den Knoten.
+\begin{lstlisting}[mathescape]
+B Z D S SBZ E U-B
+- B Z Z Z   D E
+\end{lstlisting}
+Der kürzeste Pfad ist:
+\begin{lstlisting}[mathescape]
+B - Z - D - E - U-B.
+\end{lstlisting}
+
+\item Die Breitensuche besucht die Knoten in folgender Reihenfolge.
+\begin{lstlisting}[mathescape]
+Z D S SBZ E U-B
+- Z Z Z   D E
+\end{lstlisting}
+Der Knoten \textbf{L} ist von \textbf{Z} aus nicht erreichbar.
+
+\item Hannah hat recht. Der Knoten \textbf{BS} hat keine eingehenden Kanten und ist somit von jedem anderen Knoten nicht erreichbar. Wer dem Gegner \textbf{BS} als Zielknoten angibt, hat schon gewonnen (wenn das Spiel auf dem angegebenem Graphen beschränkt ist).
+
+\item Gregorys Aussage ist falsch, weil der gegebene Graph gerichtet ist. Der Pfad zwischen \textbf{B} und \textbf{D} ist im gegebenem Graphen kürzer, als der Pfad zwischen \textbf{D} und \textbf{B}.
+
+\item Es ist einfacher drei kürzeste Pfade zu berechnen, die alle den gleichen Startknoten haben. Dann kann man nämlich die Breitensuche nur einmal ausführen. Da wir mit einem gerichteten Graphen zu tun haben, können wir Start- und Zielknoten nur dann umdrehen, wenn wir alle gerichteten Kanten auch umdrehen.
+\begin{enumerate}[(i)]
+\item Zuerst führen wir die Breitensuche aus, ausgehend vom gemeinsamen Startknoten  \textbf{B}.
+\begin{lstlisting}[mathescape]
+B Z D S SBZ E U-B
+- B Z Z Z   D E
+\end{lstlisting}
+Daraus können wir die drei kürzesten Pfade ablesen:
+\begin{lstlisting}[mathescape]
+B - Z - S
+B - Z - D
+B - Z - D - E
+\end{lstlisting}
+
+\item Jetzt führen wir die Breitensuche aus, ausgehend vom gemeinsamen Zielknoten \textbf{D}, aber dieses Mal verfolgen wir alle Kanten rückwärts, wenn wir nach Nachbarn suchen!
+Dann besuchen wir die Knoten in folgender Reihenfolge:
+\begin{lstlisting}[mathescape]
+D BS E S Z U-B B G   SBZ K
+- D  D D D E   Z U-B B   G
+\end{lstlisting}
+Daraus können wir die drei kürzeste Pfade ablesen und umkehren:
+\begin{lstlisting}[mathescape]
+Z - D
+U-B - E - D
+SBZ - B - Z - D
+\end{lstlisting}
+\end{enumerate}
 \end{enumerate}
 
 \paragraph{Aufgabe \ref{aufgabe_schlangenspiel}}
